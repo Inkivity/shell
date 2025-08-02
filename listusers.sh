@@ -26,6 +26,14 @@ function list_users_with_read_access {
 
     # Fetch the list of collaborators on the repository
     collaborators="$(github_api_get "$endpoint" | jq -r '.[] | select(.permissions.pull == true) | .login')"
+#     collaborators="$(github_api_get "$endpoint" )"
+    response="$(github_api_get "$endpoint")"
+#if echo "$response" | jq -e '.message? // empty' >/dev/null; then
+ # echo "Error: $(echo "$response" | jq -r '.message')"
+#else
+ # collaborators="$(echo "$response" | jq -r '.[] | select(.permissions.pull == true) | .login')"
+ # echo "Users with read access: $collaborators"
+#fi
 
     # Display the list of collaborators with read access
     if [[ -z "$collaborators" ]]; then
